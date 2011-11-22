@@ -1,3 +1,4 @@
+import os
 from django.core.cache.backends import memcached
 
 
@@ -8,6 +9,18 @@ class BMemcached(memcached.BaseMemcachedCache):
     """
     def __init__(self, server, params):
         import bmemcached
+        if not params.get('OPTIONS', None):
+            params['OPTIONS'] = {}
+
+        params['OPTIONS']['username'] = params['OPTIONS'].get('username',
+            os.environ.get('MEMCACHE_USERNAME', None))
+
+        params['OPTIONS']['password'] = params['OPTIONS'].get('password',
+            os.environ.get('MEMCACHE_PASSWORD', None))
+
+        if not server:
+            server = tuple(os.environ.get('MEMCACHE_SERVERS', '').split(','))
+
         super(BMemcached, self).__init__(server, params,
              library=bmemcached,
              value_not_found_exception=ValueError)
@@ -23,7 +36,7 @@ class BMemcached(memcached.BaseMemcachedCache):
                 self._options.get('username', None),
                 self._options.get('password', None))
         else:
-            client = self._lib.Client(self._servers)
+            client = self._lib.Client(self._servers,)
 
         self.client = client
 
