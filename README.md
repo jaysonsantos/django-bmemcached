@@ -1,5 +1,5 @@
 # Django-BMemcached
-A django cache backend to use bmemcached module which supports memcached binary protocol with authentication.
+A django cache backend to use [bmemcached] (https://github.com/jaysonsantos/python-binary-memcached) module which supports memcached binary protocol with authentication.
 
 ## Installing
 Use pip:
