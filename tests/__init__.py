@@ -5,7 +5,7 @@ import django_bmemcached
 
 class Tests(unittest.TestCase):
     def setUp(self):
-        self.client = django_bmemcached.BMemcached(('127.0.0.1:11211', ),
+        self.client = django_bmemcached.BMemcached(None,
             {'OPTIONS': {'username': 'user', 'password': 'password'}})
 
     def tearDown(self):
