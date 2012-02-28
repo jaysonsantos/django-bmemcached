@@ -1,3 +1,4 @@
+[![Build Status](https://secure.travis-ci.org/jaysonsantos/django-bmemcached.png?branch=master)](http://travis-ci.org/jaysonsantos/django-bmemcached)
 # Django-BMemcached
 A django cache backend to use [bmemcached] (https://github.com/jaysonsantos/python-binary-memcached) module which supports memcached binary protocol with authentication.
 
