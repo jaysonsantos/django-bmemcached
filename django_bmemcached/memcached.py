@@ -12,11 +12,16 @@ class BMemcached(memcached.BaseMemcachedCache):
         if not params.get('OPTIONS', None):
             params['OPTIONS'] = {}
 
-        params['OPTIONS']['username'] = params['OPTIONS'].get('username',
+        username = params['OPTIONS'].get('username',
             os.environ.get('MEMCACHE_USERNAME', None))
 
-        params['OPTIONS']['password'] = params['OPTIONS'].get('password',
+        if username:
+            params['OPTIONS']['username'] = username
+
+        password = params['OPTIONS'].get('password',
             os.environ.get('MEMCACHE_PASSWORD', None))
+        if password:
+            params['OPTIONS']['password'] = password
 
         if not server:
             server = tuple(os.environ.get('MEMCACHE_SERVERS', '').split(','))
@@ -38,6 +43,6 @@ class BMemcached(memcached.BaseMemcachedCache):
         else:
             client = self._lib.Client(self._servers,)
 
-        self.client = client
+        self._client = client
 
         return client
