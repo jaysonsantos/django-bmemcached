@@ -1,1 +1,2 @@
 python-binary-memcached
+nose
