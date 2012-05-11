@@ -1,4 +1,4 @@
-python-binary-memcached
+python-binary-memcached>=0.14
 Django==1.3
 nose
 coverage
