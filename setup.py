@@ -8,6 +8,7 @@ setup(
         'supports memcached binary protocol with authentication.',
     url='https://github.com/jaysonsantos/django-bmemcached',
     packages=['django_bmemcached'],
+    install_requires=['python-binary-memcached'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
