@@ -27,6 +27,13 @@ class TestWithExplicitAuth(unittest.TestCase):
         self.assertEqual(self.client._client, self.client._cache)
 
 
+class TestWithTopLevelAuthParams(TestWithExplicitAuth):
+    def setUp(self):
+        self.client = django_bmemcached.BMemcached(('127.0.0.1:11211', ),
+            {'USERNAME': 'user', 'PASSWORD': 'password'})
+
+
+
 class TestWithEnvironmentAuth(TestWithExplicitAuth):
     def setUp(self):
         os.environ['MEMCACHE_SERVERS'] = '127.0.0.1'

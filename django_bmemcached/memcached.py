@@ -13,13 +13,16 @@ class BMemcached(memcached.BaseMemcachedCache):
             params['OPTIONS'] = {}
 
         username = params['OPTIONS'].get('username',
-            os.environ.get('MEMCACHE_USERNAME', None))
+            params.get('USERNAME',
+            os.environ.get('MEMCACHE_USERNAME')))
 
         if username:
             params['OPTIONS']['username'] = username
 
         password = params['OPTIONS'].get('password',
-            os.environ.get('MEMCACHE_PASSWORD', None))
+            params.get('PASSWORD',
+            os.environ.get('MEMCACHE_PASSWORD')))
+
         if password:
             params['OPTIONS']['password'] = password
 
