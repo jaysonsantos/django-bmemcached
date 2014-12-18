@@ -1,1 +1,1 @@
-from memcached import BMemcached
+from .memcached import BMemcached
