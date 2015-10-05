@@ -10,5 +10,5 @@ env:
     - DJANGO_VERSION=">=1.7,<1.8"
     - DJANGO_VERSION=">=1.8,<1.9"
 
-install: pip install -r requirements_test.txt Django$DJANGO_VERSION python-binary-memcached --use-mirrors
+install: pip install -r requirements_test.txt Django$DJANGO_VERSION python-binary-memcached
 script: ./.travis-runs-tests.sh
