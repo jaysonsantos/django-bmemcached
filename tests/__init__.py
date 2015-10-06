@@ -6,8 +6,10 @@ import django_bmemcached
 
 class TestWithExplicitAuth(unittest.TestCase):
     def setUp(self):
-        self.client = django_bmemcached.BMemcached(('127.0.0.1:11211', ),
-            {'OPTIONS': {'username': 'user', 'password': 'password'}})
+        self.client = django_bmemcached.BMemcached(
+            ('127.0.0.1:11211',),
+            {'OPTIONS': {'username': 'user', 'password': 'password'}}
+        )
 
     def tearDown(self):
         self.client.delete('key')
@@ -29,9 +31,10 @@ class TestWithExplicitAuth(unittest.TestCase):
 
 class TestWithTopLevelAuthParams(TestWithExplicitAuth):
     def setUp(self):
-        self.client = django_bmemcached.BMemcached(('127.0.0.1:11211', ),
-            {'USERNAME': 'user', 'PASSWORD': 'password'})
-
+        self.client = django_bmemcached.BMemcached(
+            ('127.0.0.1:11211',),
+            {'USERNAME': 'user', 'PASSWORD': 'password'}
+        )
 
 
 class TestWithEnvironmentAuth(TestWithExplicitAuth):
@@ -49,4 +52,4 @@ class TestWithEnvironmentAuth(TestWithExplicitAuth):
 
 class TestWithoutAuth(TestWithExplicitAuth):
     def setUp(self):
-        self.client = django_bmemcached.BMemcached(('127.0.0.1:11211', ), {})
+        self.client = django_bmemcached.BMemcached(('127.0.0.1:11211',), {})
