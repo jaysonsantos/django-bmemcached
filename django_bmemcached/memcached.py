@@ -26,6 +26,11 @@ class BMemcached(memcached.BaseMemcachedCache):
 
         super(BMemcached, self).__init__(server, params, library=bmemcached, value_not_found_exception=ValueError)
 
+    def close(self, **kwargs):
+        # Override base behavior of disconnecting from memcache on every HTTP request.
+        # This method is, in practice, only called by Django on the request_finished signal
+        pass
+
     @property
     def _cache(self):
         client = getattr(self, '_client', None)
