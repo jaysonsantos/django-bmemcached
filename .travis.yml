@@ -7,6 +7,7 @@ env:
   matrix:
     - DJANGO_VERSION=">=1.7,<1.8"
     - DJANGO_VERSION=">=1.8,<1.9"
+    - DJANGO_VERSION=">=1.9,<2.0"
 
 install: pip install -r requirements_test.txt Django$DJANGO_VERSION python-binary-memcached
 script: ./.travis-runs-tests.sh
