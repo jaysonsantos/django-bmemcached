@@ -1,2 +1,2 @@
 nose
-coverage
+coverage==4.2
