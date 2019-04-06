@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='django-bmemcached',
-    version='0.2.3',
+    version='0.2.4',
     author='Jayson Reis',
     author_email='santosdosreis@gmail.com',
     description='A Django cache backend to use bmemcached module which ' +
