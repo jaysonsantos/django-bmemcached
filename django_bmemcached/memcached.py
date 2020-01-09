@@ -1,5 +1,36 @@
 import os
+
+import bmemcached
 from django.core.cache.backends import memcached
+from django.core.exceptions import ImproperlyConfigured
+
+# keys that are acceptable in the Django
+# settings.CACHES[...]["OPTIONS"] dictionary.
+VALID_CACHE_OPTIONS = {
+    "username",
+    "password",
+    "compression",
+    "socket_timeout",
+    "pickler",
+    "unpickler",
+    "pickle_protocol",
+}
+
+
+class InvalidCacheOptions(ImproperlyConfigured):
+    """Custom error raised when Client initialisation fails."""
+
+    def __init__(self, options):
+        # in Python 3 you can compare a list and set, but in Python 2
+        # you cannot, so need to cast the options.keys() explicitly to a set.
+        # TODO: remove set() once Python 2 support is dropped.
+        invalid_options = set(options.keys()) - VALID_CACHE_OPTIONS
+        msg = (
+            "Error initialising BMemcached - invalid options detected: %s\n"
+            "Please check your CACHES config contains only valid OPTIONS: %s"
+            % (invalid_options, VALID_CACHE_OPTIONS)
+        )
+        super(InvalidCacheOptions, self).__init__(msg)
 
 
 class BMemcached(memcached.BaseMemcachedCache):
@@ -8,7 +39,6 @@ class BMemcached(memcached.BaseMemcachedCache):
     A.K.A BMemcached.
     """
     def __init__(self, server, params):
-        import bmemcached
         params.setdefault('OPTIONS', {})
 
         username = params['OPTIONS'].get('username', params.get('USERNAME', os.environ.get('MEMCACHE_USERNAME')))
@@ -38,12 +68,12 @@ class BMemcached(memcached.BaseMemcachedCache):
             return client
 
         if self._options:
-            client = self._lib.Client(
-                self._servers, self._options.get('username', None),
-                self._options.get('password', None)
-            )
+            try:
+                client = self._lib.Client(self._servers, **self._options)
+            except TypeError:
+                raise InvalidCacheOptions(self._options)
         else:
-            client = self._lib.Client(self._servers,)
+            client = self._lib.Client(self._servers)
 
         self._client = client
 
